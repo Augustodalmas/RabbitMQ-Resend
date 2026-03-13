@@ -1,6 +1,7 @@
 # Projeto de Estudo - RabbitMQ
 
 Este projeto foi desenvolvido com o objetivo de estudar o funcionamento do **RabbitMQ** e o uso de **filas para comunicação assíncrona entre serviços**.
+
 A aplicação simula o **registro de usuários**, onde uma API envia uma mensagem para uma fila no RabbitMQ. Um **Worker** consome essa fila e executa uma ação posterior: o envio de um email para o usuário.
 
 ---
@@ -13,6 +14,7 @@ O fluxo da aplicação funciona da seguinte forma:
 4. O Worker processa a mensagem e envia um **email** utilizando o serviço **Resend**.
 
 Fluxo simplificado:
+
 Cliente -> API (Node.js) -> RabbitMQ -> Worker (Python + Pika) -> Resend (Email)
 
 ---
@@ -28,16 +30,23 @@ Cliente -> API (Node.js) -> RabbitMQ -> Worker (Python + Pika) -> Resend (Email)
 ---
 
 # Executando o RabbitMQ com Docker
+
 O projeto possui um arquivo **docker-compose.yml** que inicia um container do RabbitMQ para facilitar o ambiente de estudo.
+
 Para subir o container execute:
 ```bash
 docker-compose up -d
 ```
 Após a inicialização, o painel administrativo do RabbitMQ estará disponível em:
+
 http://localhost:15672
+
 Credenciais padrão:
+
 Usuário: admin
+
 Senha: admin
+
 
 # Funcionamento da API (Node.js)
 
