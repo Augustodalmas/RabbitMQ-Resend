@@ -51,11 +51,17 @@ Senha: admin
 # Funcionamento da API (Node.js)
 
 A API simula o registro de usuários em uma base de dados.
+
 Quando um novo usuário é registrado:
+
 A API recebe os dados do usuário
+
 Simula o registro no banco de dados
+
 Envia uma mensagem para a fila register no RabbitMQ
+
 Exemplo de mensagem enviada para a fila:
+
 {
   "email": "usuario@email.com",
   "senha": "123456"
@@ -64,18 +70,31 @@ Exemplo de mensagem enviada para a fila:
 # Worker (Python + Pika)
 
 O Worker é responsável por consumir mensagens da fila register.
+
 Funcionamento:
+
 O Worker fica escutando a fila no RabbitMQ
+
 Quando uma nova mensagem chega, ele lê os dados do usuário
+
 Processa o evento de criação
+
 Envia um email de confirmação utilizando o serviço Resend
+
 Exemplo de resposta enviada ao usuário:
+
 'Usuário criado com sucesso!'
+
 
 # Objetivo do Projeto
 
 Utilizado para estudo dos seguintes conceitos:
+
 Comunicação assíncrona entre serviços
+
 Uso de filas de mensagens
+
 Integração entre diferentes linguagens (Node.js + Python)
+
 Workers para processamento assíncrono
+
