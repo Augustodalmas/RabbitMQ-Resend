@@ -28,18 +28,23 @@ def main():
     )
     channel = connection.channel()
 
-    channel.queue_declare(queue="register")
+    channel.queue_declare(queue="register", durable=True)
 
     def callback(ch, method, properties, body):
-        data = json.loads(body)
+        try:
+            data = json.loads(body)
+            enviar_email(data['email'])
+            print("Email enviado com sucesso!")
+            ch.basic_ack(delivery_tag=method.delivery_tag)
+        except Exception as e:
+            print(f"Erro ao processar mensagem: {e}")
+            ch.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
 
-        enviar_email(data['email'])
-        print("Email enviado com sucesso!")
-
+    channel.basic_qos(prefetch_count=1)
     channel.basic_consume(
         queue="register",
         on_message_callback=callback,
-        auto_ack=True,
+        auto_ack=False,
     )
 
     print(" [*] Waiting for messages. To exit press CTRL+C")

@@ -2,10 +2,10 @@ const { send } = require('../config/rabbitMQ')
 
 const user_register = {
     register: async function (req, res) {
-        const { email, senha } = req.body;
+        const { email } = req.body;
 
         try {
-            const message = { email, senha }
+            const message = { email }
             await send('register', message)
             return res.status(201).json({ 'message': "Usuário criado com sucesso!" })
         } catch (error) {
